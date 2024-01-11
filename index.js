@@ -2,28 +2,35 @@ function hasTargetSum(array, target) {
   // Write your algorithm here
   // Obtain pairs of numbers in the array
   
-  let i = 0;
-  while (i < array.length){
 
-    for (let indx = 0; indx < array.length-1; indx++){
+  let indx = 0;
+  let end = array.length;
+  
+  
+  while (indx < end){
+
+      // create a copy of the array
+      arrayCopy = [...array];
 
       // Store current element in a variable
-      let currentElement = array[indx];
+      let currentElement = arrayCopy[indx];
 
       // Get rid of current element from array
-      array.splice(indx, 1)
+      arrayCopy.splice(indx, 1)
 
       // Add current element to each item in array
-      newArray = array.map(item => item + currentElement);
+      newArray = arrayCopy.map(item => item + currentElement);
 
       // Compare the sum of each with the target
       if (newArray.includes(target)){
         return true;
       }
-    }
-    i++;
+      // if it does not include the target do not return anything
+      // After completing the loop and it does not return any true value that would break and exit,
+      // it goes out of the while loop and returns "false", then exits
+    indx++;
   }
-return false;
+  return false;
 }
 
 /* 
@@ -60,6 +67,23 @@ if (require.main === module) {
 
   console.log("Expecting: false");
   console.log("=>", hasTargetSum([1, 2, 5], 4));
+  
+  console.log("");
+
+  console.log("");
+  // Negative numbers?
+  console.log("Expecting: true");
+  console.log("=>", hasTargetSum([-7, 10, 4, 8], 3));
+
+  console.log("");
+  // Multiple pairs?
+  console.log("Expecting: true");
+  console.log("=>", hasTargetSum([1, 2, 3, 4], 5));
+
+  console.log("");
+  // Single numbers?
+  console.log("Expecting: false");
+  console.log("=>", hasTargetSum([4], 4));
 }
 
 module.exports = hasTargetSum;
